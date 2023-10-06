@@ -14,3 +14,7 @@ Things I intend to learn & improve on:
 
 Oct. 6 log
 - start 7:38AM
+    - created HTML Overlay and Display
+    - created CSS styling, used help from ChatGPT to style buttons and format overlay
+    - created JS script for showing and hiding buttons
+- break 10:35AM
