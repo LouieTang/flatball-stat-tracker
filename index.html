@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Ultimate Frisbee Stat Tracker</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Ultimate Frisbee Stat Tracker</h1>
+        <div id="score"></div>
+        <div id="genderRatio"></div>
+        <div id="playerList"></div>
+    </div>
+    <button id="setUpButton" onclick="openPopup()">Set Up Match</button>
+    <!-- Initially Hidden Buttons -->
+    <button id="endGame" onclick="endGame()">End Game</button>
+    <button id="resetPage" onclick="resetPage()">Reset Page</button>
+
+
+    <!-- Opening popup overlay -->
+    <div id="popupOverlay" class="overlay">
+        <!-- Popup content -->
+        <div class="popup">
+            <h2>Set Up</h2>
+
+            <!-- Left column for player names and gender matching-->
+            <div class="left-column">
+                <h3>Enter Player Names</h3>
+                <ul>
+                    <li>
+                        <input id="player1" type="text" class="player-input" placeholder="Player 1">
+                        <select id="playerGender1" name="playerGender">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="male">M</option>
+                            <option value="female">F</option>
+                        </select>
+                    </li>
+                    <br>
+                    <li>
+                        <input id="player2" type="text" class="player-input" placeholder="Player 2">
+                        <select id="playerGender2" name="playerGender">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="male">M</option>
+                            <option value="female">F</option>
+                        </select>
+                    </li>
+                    <br>
+                    <li>
+                        <input id="player3" type="text" class="player-input" placeholder="Player 3">
+                        <select id="playerGender3" name="playerGender">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="male">M</option>
+                            <option value="female">F</option>
+                        </select>
+                    </li>
+                    <br>
+                    <li>
+                        <input id="player4" type="text" class="player-input" placeholder="Player 4">
+                        <select id="playerGender4" name="playerGender">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="male">M</option>
+                            <option value="female">F</option>
+                        </select>
+                    </li>
+                    <br>
+                    <li>
+                        <input id="player5" type="text" class="player-input" placeholder="Player 5">
+                        <select id="playerGender5" name="playerGender">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="male">M</option>
+                            <option value="female">F</option>
+                        </select>
+                    </li>
+                    <br>
+                    <li>
+                        <input id="player6" type="text" class="player-input" placeholder="Player 6">
+                        <select id="playerGender6" name="playerGender">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="male">M</option>
+                            <option value="female">F</option>
+                        </select>
+                    </li>
+                    <br>
+                    <li>
+                        <input id="player7" type="text" class="player-input" placeholder="Player 7">
+                        <select id="playerGender7" name="playerGender">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="male">M</option>
+                            <option value="female">F</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right column for buttons and selectors -->
+            <div class="right-column">
+                <p>Choose the game type:</p>
+
+                <!-- Radio buttons for single gender or mixed gender game -->
+                <input type="radio" id="singleGender" name="gameType" value="singleGender">
+                <label class="radio-button-label" for="singleGender" onclick="closeMorF()">Single Gender Match</label>
+
+                <input type="radio" id="mixedGender" name="gameType" value="mixedGender">
+                <label class="radio-button-label" for="mixedGender" onclick="openMorF()">Mixed Gender Match</label>
+
+                <br>
+
+                <!-- Radio buttons for gender ratio if mixed gender match is selected -->
+                <div id="mOrF">
+                    <p>Starting Ratio:</p>
+                    <input type="radio" id="maleMatching" name="genderMatch" value="maleMatching">
+                    <label class="radio-button-label" for="maleMatching">Male Matching</label>
+
+                    <input type="radio" id="femaleMatching" name="genderMatch" value="femaleMatching">
+                    <label class="radio-button-label" for="femaleMatching">Female Matching</label>
+
+                    <br>
+                </div>
+
+                <!-- Radio buttons for selecting what our team starts on -->
+                <p>We Start On:</p>
+
+                <input type="radio" id="offenseStart" name="startOD" value="offenseStart">
+                <label class="radio-button-label" for="offenseStart">Offense</label>
+
+                <input type="radio" id="defenseStart" name="startOD" value="defenseStart">
+                <label class="radio-button-label" for="defenseStart">Defense</label>
+
+                <br>
+
+                <!-- Input for game to _ functionality -->
+                <p>Game To:</p>
+                <input type="number" id="gameTo" placeholder="Enter game number" min="1">
+
+                <br>
+                <br>
+
+                <button onclick="startGame()">Start Game</button>
+                <button onclick="closePopup()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

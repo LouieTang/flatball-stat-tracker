@@ -1,0 +1,100 @@
+/* Add your CSS styles here */
+body {
+    font-family: Arial, sans-serif;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+.player {
+    display: inline-block;
+    margin: 10px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#mOrF {
+    display: none;
+}
+
+ /* CSS for the overlay */
+ .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+/* CSS for the popup */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    z-index: 2;
+}
+
+/* CSS for styling radio buttons as buttons */
+.radio-button-label {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #0074d9; /* Button background color */
+    color: white; /* Text color */
+    cursor: pointer;
+    border: 1px solid #0074d9; /* Button border */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Hide the actual radio buttons */
+input[type="radio"] {
+    display: none;
+}
+
+/* Style radio buttons when checked */
+input[type="radio"]:checked + label {
+    background-color: #2ecc40; /* Button background color when checked */
+    border-color: #2ecc40; /* Button border color when checked */
+}
+
+li{
+    list-style-type: none;
+    padding: 0;
+}
+
+/* CSS for the player input section */
+#playerInputs {
+    float: left;
+    width: 40%;
+}
+
+/* CSS for player name inputs */
+.player-input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* CSS for the left column */
+.left-column {
+    float: left;
+    width: 50%;
+}
+
+/* CSS for the right column */
+.right-column {
+    float: right;
+    width: 50%;
+}
+
+#resetPage, #endGame{
+    display: none;
+}
