@@ -95,6 +95,6 @@ li{
     width: 50%;
 }
 
-#resetPage, #endGame{
+#resetPage, #endGame, #theirGoal{
     display: none;
 }
