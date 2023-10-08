@@ -98,3 +98,8 @@ li{
 #resetPage, #endGame, #theirGoal{
     display: none;
 }
+
+#genderRatio{
+    display: block;
+}
+
