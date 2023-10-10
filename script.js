@@ -53,16 +53,16 @@ function updateStateOurScore(){
     ourScore++;
     updateGender();
     updateScore();
-    if(ourScore == gameTotalScore || theirScore == gameTotalScore){
-        finishGame();
-        console.log("here7");
-
-    }
     if(ourScore == halfScore && theirScore < halfScore){
         initHalfTime();
     }
     else{
         stateDefense();
+    }
+    if(ourScore == gameTotalScore || theirScore == gameTotalScore){
+        finishGame();
+        console.log("here7");
+
     }
 }
 function updateStateTheirScore(){
@@ -86,7 +86,26 @@ function finishGame(){
     console.log("here");
     console.log(players);
     alert(`Final Score: ${ourScore} - ${theirScore}`);
-    // resetPage();
+    const resultingStats = document.getElementById("finalStats");
+    players.forEach(player => {
+        resultingStats.innerHTML += `${player.name}: Catches - ${player.catches}, Completions - ${player.completions}, Drops - ${player.drops}, Throwaways - ${player.throwaways}, Blocks - ${player.blocks}, Goals - ${player.goals}, Assists - ${player.assists}, Callahans - ${player.callahans}<br>`;
+    });
+
+    endDisplay();
+
+}
+
+function endDisplay(){
+    const currentScore = document.getElementById("score");
+    currentScore.innerHTML = `Final Score: ${ourScore} - ${theirScore}`;
+    const genderRatio = document.getElementById("genderRatio");
+    genderRatio.innerHTML = "";
+    const playerListDiv = document.getElementById("playerList");
+    playerListDiv.innerHTML = "";
+    document.getElementById("theirGoal").style.display = "none";
+    document.getElementById("endGame").style.display = "none";
+
+
 }
 
 function initHalfTime(){
