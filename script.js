@@ -7,6 +7,7 @@ let halfScore = 0;
 let currentState = 0; // 0 - offense, 1 - defense
 let startGender = 0; // 0 - female, 1 - male
 let startState = 0; // 0 - offense, 1 - defense
+let currentPlayer = -1;
 
 function startGame(){
     initializeGame();
@@ -83,8 +84,9 @@ function updateStateTheirScore(){
 
 function finishGame(){
     console.log("here");
+    console.log(players);
     alert(`Final Score: ${ourScore} - ${theirScore}`);
-    resetPage();
+    // resetPage();
 }
 
 function initHalfTime(){
@@ -147,6 +149,8 @@ function initializePlayers() {
                 gender: playerGender,
                 catches: 0,
                 completions: 0,
+                drops: 0,
+                throwaways: 0,
                 blocks: 0,
                 goals: 0,
                 assists: 0,
@@ -161,7 +165,12 @@ function initializePlayers() {
         gender: '',
         catches: 0,
         completions: 0,
+        drops: 0,
+        throwaways: 0,
         blocks: 0,
+        goals: 0,
+        assists: 0,
+        callahans: 0,
         hasDisc: false,
     });
 
@@ -216,15 +225,29 @@ function stateDefense(){
     let i = 0;
     players.forEach((player) => {
         playerListDiv.innerHTML += `<div class="player" id="player${i}"><span>${player.name}</span> - 
-        <button onclick="stateOffense()">Block</button>
-        <button onclick="updateStateOurScore()">Block & Score</button>`;
+        <button onclick="countBlock(${i})">Block</button>
+        <button onclick="countCallahan(${i})">Block & Score</button>`;
         i++;
     });
 
 }
 
+function countBlock(playerNumber){
+    players[playerNumber].blocks++;
+    stateOffense();
+}
+function countCallahan(playerNumber){
+    players[playerNumber].callahans++;
+    updateStateOurScore();
+}
+
 function hasDisc(playerNumber){
     console.log("here?");
+    if(currentPlayer != -1){
+        players[currentPlayer].completions++;
+        players[playerNumber].catches++;
+    }
+    currentPlayer = playerNumber;
     const playerListDiv = document.getElementById("playerList");
     document.getElementById("theirGoal").style.display = "none";
     playerListDiv.innerHTML = "";
@@ -233,9 +256,9 @@ function hasDisc(playerNumber){
         if(i != playerNumber){
             playerListDiv.innerHTML += `<div class="player" id="player${i}"><span">${player.name}</span> - 
             <button onclick="hasDisc(${i})">Catch</button>
-            <button onclick="stateDefense()">Drop</button>
-            <button onclick="stateDefense()">Throwaway</button>
-            <button onclick="updateStateOurScore()">Goal</button></div>`;
+            <button onclick="countDrop(${i})">Drop</button>
+            <button onclick="countThrowaway(${i})">Throwaway</button>
+            <button onclick="countGoal(${i})">Goal</button></div>`;
         }
         else{
             playerListDiv.innerHTML += `<div class="player" id="player${i}"><span>${player.name}</span></div>`;
@@ -243,6 +266,25 @@ function hasDisc(playerNumber){
         i++
     });
 }
+
+function countDrop(playerNumber){
+    currentPlayer = -1;
+    players[playerNumber].drops++;
+    stateDefense();
+}
+function countThrowaway(playerNumber){
+    currentPlayer = -1;
+    players[playerNumber].throwaways++;
+    stateDefense();
+}
+
+function countGoal(playerNumber){
+    players[currentPlayer].assists++;
+    players[playerNumber].goals++;
+    currentPlayer = -1;
+    updateStateOurScore();
+}
+
 
 
 function updateGender(){
