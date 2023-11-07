@@ -1,9 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
 import userRoutes from "./routes/users.js";
+import connectMongoDB from "./config/mongodbConfig.js";
 
 const app = express();
 const PORT = 8080;
+
+connectMongoDB();
 
 app.use(bodyParser.json());
 
