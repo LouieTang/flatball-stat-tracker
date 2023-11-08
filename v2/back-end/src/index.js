@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import playerRoutes from "./routes/players.js";
+import teamRoutes from "./routes/teams.js";
 import connectMongoDB from "./config/mongodbConfig.js";
 
 const app = express();
@@ -11,6 +12,7 @@ connectMongoDB();
 app.use(bodyParser.json());
 
 app.use("/players", playerRoutes);
+app.use("/teams", teamRoutes);
 
 app.get("/", (req, res) => {
     console.log("Successful");
