@@ -3,10 +3,10 @@ import { Schema, mongoose } from "mongoose";
 const teamSchema = new mongoose.Schema({
     teamName: String,
     teamFormat: String,
-    players: [{ 
-        type: Schema.Types.ObjectId,
+    players: {
+        type: [Schema.Types.ObjectId],
         ref: "Player"
-    }]
+    }
 });
 
 const Team = mongoose.model("Team", teamSchema, "teams");

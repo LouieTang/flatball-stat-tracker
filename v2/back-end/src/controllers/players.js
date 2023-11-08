@@ -46,20 +46,25 @@ export const getSinglePlayer = async (req, res) => {
 export const deleteSinglePlayer = async (req, res) => {
     try{
         const {_id} = req.params;
-        const player = Player.findById(_id);
+        const player = await Player.findById(_id);
 
         if (!player) {
             return res.status(404).send("Player not found.");
         }
 
-        const team = Team.findById(player.team);
+        const team = await Team.findById(player.team);
+
+        console.log(team);
 
         if (!team) {
             return res.status(404).send("Team not found.");
         }
 
-        team.players.pull(_id);
+        team.players = team.players.filter((playerId) => playerId.toString() !== _id.toString());
+        
         await team.save();
+
+        console.log(team);
 
         await Player.findByIdAndDelete(_id);
         res.send(`Player with id ${_id} has been deleted.`);
