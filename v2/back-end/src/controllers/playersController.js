@@ -1,29 +1,29 @@
 import { Player, Team } from "../models/mongodbModels.js";
 
 export const createPlayer = async (req, res) => {
-    try{
-        const {teamId, ...playerData} = req.body;
-        const team = await Team.findById(teamId);
+    try {
+        const {team, ...playerData} = req.body;
+        const playerTeam = await Team.findById(team);
 
-        if (!team) {
+        if (!playerTeam) {
             return res.status(404).send("Team not found.");
         }
 
-        const player = new Player({...playerData, team: team._id});
+        const player = new Player({...playerData, team: playerTeam._id});
         await player.save();
 
-        team.players.push(player._id);
-        await team.save();
+        playerTeam.players.push(player._id);
+        await playerTeam.save();
 
-        res.send(`Player with name ${player.firstName} on team ${team.teamName} added to the database.`);
-    } catch (error){
+        res.send(`Player with name ${player.firstName} on team ${playerTeam.teamName} added to the database.`);
+    } catch (error) {
         console.error(error);
-        res.status(500).send('Error adding user to the database.');
+        res.status(500).send('Error adding player to the database.');
     }
 }
 
 export const getPlayers = async (req, res) => {
-    try{
+    try {
         const players = await Player.find({});
         res.send(players);
     } catch (error) {
@@ -33,7 +33,7 @@ export const getPlayers = async (req, res) => {
 }
 
 export const getSinglePlayer = async (req, res) => {
-    try{
+    try {
         const {_id} = req.params;
         const player = await Player.findById(_id);
         res.send(player);
@@ -44,7 +44,7 @@ export const getSinglePlayer = async (req, res) => {
 }
 
 export const deleteSinglePlayer = async (req, res) => {
-    try{
+    try {
         const {_id} = req.params;
         const player = await Player.findById(_id);
 
@@ -64,8 +64,6 @@ export const deleteSinglePlayer = async (req, res) => {
         
         await team.save();
 
-        console.log(team);
-
         await Player.findByIdAndDelete(_id);
         res.send(`Player with id ${_id} has been deleted.`);
     } catch (error) {
@@ -75,7 +73,7 @@ export const deleteSinglePlayer = async (req, res) => {
 }
 
 export const patchSinglePlayer = async (req, res) => {
-    try{
+    try {
         const {_id} = req.params;
         const {firstName, lastName, jerseyNumber, genderMatch, age} = req.body;
         const player = await Player.findById(_id);

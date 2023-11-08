@@ -1,9 +1,28 @@
-import { Schema, mongoose } from "mongoose";
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+
+const matchSchema = new mongoose.Schema({
+    homeTeam: String,
+    awayTeam: String,
+    homeScore: Number,
+    awayScore: String,
+    datePlayed: Date,
+    team: {
+        type: Schema.Types.ObjectId,
+        ref: "Team"
+    }
+});
+
+const Match = mongoose.model("Match", matchSchema, "matches");
 
 const teamSchema = new mongoose.Schema({
     teamName: String,
     teamFormat: String,
     players: {
+        type: [Schema.Types.ObjectId],
+        ref: "Player"
+    },
+    matches: {
         type: [Schema.Types.ObjectId],
         ref: "Player"
     }
@@ -25,4 +44,4 @@ const playerSchema = new mongoose.Schema({
   
 const Player = mongoose.model("Player", playerSchema, "players");
 
-export {Player, Team};
+export {Player, Team, Match};

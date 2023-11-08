@@ -1,5 +1,5 @@
 import express from "express";
-import { getTeams, createTeam, getSingleTeam, deleteSingleTeam, patchSingleTeam } from "../controllers/teams.js"
+import { getTeams, createTeam, getSingleTeam, deleteSingleTeam, patchSingleTeam } from "../controllers/teamsController.js"
 
 const router = express.Router();
 

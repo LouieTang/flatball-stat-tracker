@@ -1,18 +1,18 @@
-import { Team, Player } from "../models/mongodbModels.js";
+import { Team, Player, Match } from "../models/mongodbModels.js";
 
 export const createTeam = async (req, res) => {
     try{
         const team = new Team(req.body);
         await team.save();
         res.send(`Team with name ${team.teamName} added to the database.`);
-    } catch (error){
+    } catch (error) {
         console.error(error);
-        res.status(500).send('Error adding user to the database.');
+        res.status(500).send('Error adding team to the database.');
     }
 }
 
 export const getTeams = async (req, res) => {
-    try{
+    try {
         const teams = await Team.find({});
         res.send(teams);
     } catch (error) {
@@ -22,7 +22,7 @@ export const getTeams = async (req, res) => {
 }
 
 export const getSingleTeam = async (req, res) => {
-    try{
+    try {
         const {_id} = req.params;
         const team = await Team.findById(_id);
         res.send(team);
@@ -33,7 +33,7 @@ export const getSingleTeam = async (req, res) => {
 }
 
 export const deleteSingleTeam = async (req, res) => {
-    try{
+    try {
         const {_id} = req.params;
         const team = Team.findById(_id);
 
@@ -42,6 +42,7 @@ export const deleteSingleTeam = async (req, res) => {
         }
 
         await Player.deleteMany({team: _id});
+        await Match.deleteMany({team: _id});
         await Team.findByIdAndDelete(_id);
 
         res.send(`Team with id ${_id} has been deleted.`);
@@ -52,7 +53,7 @@ export const deleteSingleTeam = async (req, res) => {
 }
 
 export const patchSingleTeam = async (req, res) => {
-    try{
+    try {
         const {_id} = req.params;
         const {teamName, teamFormat} = req.body;
         const team = await Team.findById(_id);
