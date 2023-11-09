@@ -15,3 +15,5 @@ How to Connect Node.js App to MongoDB | Node.js & MongoDB Tutorial - https://www
 Build a REST API with Node JS and Express | CRUD API Tutorial - https://www.youtube.com/watch?v=l8WPWK9mS5M
 
 Folder Structure for API's - Beginner, Intermediate, and Advanced - https://www.youtube.com/watch?v=oNlMrpnUSFE
+
+React JS Crash Course - https://www.youtube.com/watch?v=w7ejDZ8SWv8

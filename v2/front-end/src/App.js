@@ -1,17 +1,20 @@
-import Header from "./components/Header"
-import Body from "./components/Body"
-import Footer from "./components/Footer"
-import SetTeams from "./components/SetTeams";
+import { Link, Route, Routes } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import TeamsPage from "./pages/TeamsPage";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="container">
-      <Header />
-      <Body />
-      <SetTeams />
-      <Footer />
-    </div>
+    <>
+        <Header />
+        <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/teams" element={<TeamsPage />} />
+        </Routes>
+        <Footer />
+    </>
   );
-}
+};
 
 export default App;
