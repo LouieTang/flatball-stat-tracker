@@ -1,4 +1,5 @@
-import { Player, Team } from "../models/mongodbModels.js";
+import Team from "../models/teamModel.js";
+import Player from "../models/playerModel.js";
 
 export const createPlayer = async (req, res) => {
     try {
