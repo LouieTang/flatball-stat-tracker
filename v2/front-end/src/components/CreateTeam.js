@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const CreateTeam = ({onMake}) => {
     const navigate = useNavigate();
     const [teamName, setTeamName] = useState("");
-    const [teamFormat, setTeamFormat] = useState("male");
+    const [teamFormat, setTeamFormat] = useState("Mixed");
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -18,7 +18,7 @@ const CreateTeam = ({onMake}) => {
         onMake({teamName, teamFormat});
 
         setTeamName("");
-        setTeamFormat("male");
+        setTeamFormat("Mixed");
 
         navigate("/teams");
     }
@@ -32,9 +32,9 @@ const CreateTeam = ({onMake}) => {
             <div className="form-control">
                 <label htmlFor="team-format">Team Format</label>
                 <select id="team-format" className="team-format-dropdown" value={teamFormat} onChange={(e) => setTeamFormat(e.target.value)}  required>
-                    <option value="male">Single Gendered (Male)</option>
-                    <option value="female">Single Gendered (Female)</option>
-                    <option value="mixed">Mixed</option>
+                    <option value="Mixed">Mixed</option>
+                    <option value="Male">Single Gendered (Male)</option>
+                    <option value="Female">Single Gendered (Female)</option>
                 </select>
             </div>
             <input type="submit" value="Create Team" />

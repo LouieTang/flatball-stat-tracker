@@ -1,9 +1,11 @@
-import React from 'react'
+import GetTeams from '../components/GetTeams'
 
 const TeamsPage = () => {
-  return (
-    <div>TeamsPage</div>
-  )
+    return (
+        <>
+            <GetTeams />
+        </>
+    )
 }
 
 export default TeamsPage
