@@ -4,6 +4,7 @@ import playerRoutes from "./routes/players.js";
 import teamRoutes from "./routes/teams.js";
 import matchRoutes from "./routes/matches.js";
 import connectMongoDB from "./config/mongodbConfig.js";
+import userRoutes from "./routes/users.js";
 import cors from "cors";
 
 
@@ -15,6 +16,7 @@ connectMongoDB();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use("/users", userRoutes);
 app.use("/players", playerRoutes);
 app.use("/teams", teamRoutes);
 app.use("/matches", matchRoutes);
