@@ -9,7 +9,7 @@ export const createTeam = async (req, res) => {
         res.send(`Team with name ${team.teamName} added to the database.`);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error adding team to the database.');
+        res.status(500).send("Error adding team to the database.");
     }
 }
 
@@ -19,18 +19,18 @@ export const getTeams = async (req, res) => {
         res.send(teams);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error getting teams from the database.');
+        res.status(500).send("Error getting teams from the database.");
     }
 }
 
-export const getSingleTeam = async (req, res) => {
+export const getSingleTeamInfo = async (req, res) => {
     try {
         const {_id} = req.params;
         const team = await Team.findById(_id);
         res.send(team);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error getting team from the database.');
+        res.status(500).send("Error getting team from the database.");
     }
 }
 
@@ -50,7 +50,7 @@ export const deleteSingleTeam = async (req, res) => {
         res.send(`Team with id ${_id} has been deleted.`);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error deleting team from the database.');
+        res.status(500).send("Error deleting team from the database.");
     }
 }
 
@@ -67,6 +67,20 @@ export const patchSingleTeam = async (req, res) => {
         res.send(`Team with id ${_id} has been updated.`);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error updating team in the database.');
+        res.status(500).send("Error updating team in the database.");
+    }
+}
+
+export const getSingleTeamPlayers = async (req, res) => {
+    try {
+        const {_id} = req.params;
+        const team = await Team.findById(_id);
+
+        const players = await Player.find({ _id: { $in: team.players } });
+
+        res.send(players);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error getting team players from database");
     }
 }

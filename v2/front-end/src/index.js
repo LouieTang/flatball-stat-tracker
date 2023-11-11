@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    //causes double call to server
+    // React.StrictMode causes double call to server
     <React.StrictMode>
         <BrowserRouter>
             <App />
