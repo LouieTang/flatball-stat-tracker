@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const LoginPage = () => {
@@ -10,7 +10,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
 
     const login = (userData) => {
-        return axios.post("http://localhost:5000/users", userData)
+        return axios.post("http://localhost:5000/users/login", userData)
             .then(response => {
                 console.log("Success:", response.data);
                 return response.data;
@@ -69,6 +69,9 @@ const LoginPage = () => {
                 </div>
                 <input type="submit" value="Login" />
             </form>
+            <p>
+                Don't have an account? <Link to="/register">Register.</Link>
+            </p>
         </>
         
     )
