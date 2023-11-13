@@ -1,9 +1,33 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-
-const CreateTeam = ({onMake}) => {
+const CreateTeamPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const {user} = location.state || {};
+
+    useEffect(() => {
+        if(user === undefined){
+            navigate("/login");
+        }
+    }, [user, navigate]);
+
+    const makeTeam = (team) => {
+
+        const assignTeam = {...team, user};
+
+        console.log("Backend: ", assignTeam);
+
+        axios.post("http://localhost:5000/teams", assignTeam)
+            .then(response => {
+                console.log("Success:", response.data);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
     const [teamName, setTeamName] = useState("");
     const [teamFormat, setTeamFormat] = useState("Mixed");
 
@@ -15,12 +39,12 @@ const CreateTeam = ({onMake}) => {
             return;
         }
 
-        onMake({teamName, teamFormat});
+        makeTeam({teamName, teamFormat});
 
         setTeamName("");
         setTeamFormat("Mixed");
 
-        navigate("/teams");
+        navigate("/team", {state: {user}});
     }
 
     return (
@@ -33,13 +57,13 @@ const CreateTeam = ({onMake}) => {
                 <label htmlFor="team-format">Team Format</label>
                 <select id="team-format" className="team-format-dropdown" value={teamFormat} onChange={(e) => setTeamFormat(e.target.value)}  required>
                     <option value="Mixed">Mixed</option>
-                    <option value="Male">Single Gendered (Male)</option>
-                    <option value="Female">Single Gendered (Female)</option>
+                    <option value="Female">Single Gender (Female)</option>
+                    <option value="Male">Single Gender (Male)</option>
                 </select>
             </div>
             <input type="submit" value="Create Team" />
         </form>
     );
-};
+}
 
-export default CreateTeam;
+export default CreateTeamPage;
