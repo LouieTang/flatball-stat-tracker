@@ -40,10 +40,10 @@ const LoginPage = () => {
         const userData = {username, password};
         
         try {
-            const isValid = await login(userData);
-            console.log(isValid);
-            if(isValid) {
-                navigate("/teams");
+            const user = await login(userData);
+            console.log(user);
+            if(user != null) {
+                navigate("/team", {state: {user}});
             }
             else {
                 alert("Incorrect credidentials.");
@@ -51,6 +51,7 @@ const LoginPage = () => {
             setUsername("");
             setPassword("");
         } catch (error) {
+            alert("Incorrect Username or Password");
             console.error("Error:", error);
         }
     }
@@ -70,7 +71,7 @@ const LoginPage = () => {
                 <input type="submit" value="Login" />
             </form>
             <p>
-                Don't have an account? <Link to="/register">Register.</Link>
+                Don't have an account? <Link to="/register">Register</Link>.
             </p>
         </>
         

@@ -1,10 +1,26 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import CreateTeam from "../components/CreateTeam";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const MainPage = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const {user} = location.state || {};
+
+    useEffect(() => {
+        if(user === undefined){
+            navigate("/login");
+        }
+    }, [user, navigate]);
+
     const makeTeam = (team) => {
-        axios.post("http://localhost:5000/teams", team)
+
+        const assignTeam = {...team, user};
+
+        console.log("Backend: ", assignTeam);
+
+        axios.post("http://localhost:5000/teams", assignTeam)
             .then(response => {
                 console.log("Success:", response.data);
             })

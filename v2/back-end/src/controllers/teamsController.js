@@ -5,6 +5,7 @@ import Match from "../models/matchModel.js";
 export const createTeam = async (req, res) => {
     try{
         const team = new Team(req.body);
+        console.log(req.body);
         await team.save();
         res.send(`Team with name ${team.teamName} added to the database.`);
     } catch (error) {

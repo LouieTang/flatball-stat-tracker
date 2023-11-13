@@ -85,7 +85,7 @@ const RegisterPage = () => {
                 <input type="submit" value="Register" />
             </form>
             <p>
-                Have an account already? <Link to="/login">Login.</Link>
+                Have an account already? <Link to="/login">Login</Link>.
     `       </p>
         </>
     )
