@@ -76,14 +76,13 @@ export const deleteSinglePlayer = async (req, res) => {
 export const patchSinglePlayer = async (req, res) => {
     try {
         const {_id} = req.params;
-        const {firstName, lastName, jerseyNumber, genderMatch, age} = req.body;
+        const {firstName, lastName, jerseyNumber, genderMatch} = req.body;
         const player = await Player.findById(_id);
 
         if (firstName) player.firstName = firstName;
         if (lastName) player.lastName = lastName;
         if (jerseyNumber) player.jerseyNumber = jerseyNumber;
         if (genderMatch) player.genderMatch = genderMatch;
-        if (age) player.age = age;
 
         await player.save();
         res.send(`Player with id ${_id} has been updated.`);

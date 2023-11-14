@@ -6,7 +6,6 @@ const playerSchema = new mongoose.Schema({
     lastName: String,
     jerseyNumber: Number,
     genderMatch: String,
-    age: Number,
     team: {
         type: Schema.Types.ObjectId,
         ref: "Team"

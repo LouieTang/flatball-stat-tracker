@@ -13,6 +13,6 @@ router.delete("/:_id", deleteSingleTeam);
 
 router.patch("/:_id", patchSingleTeam);
 
-router.get("/:_id", getSingleTeamPlayers);
+router.get("/p/:_id", getSingleTeamPlayers);
 
 export default router;
