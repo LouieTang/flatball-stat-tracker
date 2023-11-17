@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage";
 import TeamPage from "./pages/TeamPage";
 import CreateTeamPage from "./pages/CreateTeamPage";
 import AddPlayersPage from "./pages/AddPlayersPage";
+import NewMatch from "./pages/NewMatch";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
             <Route path="/team" element={<TeamPage />} />
             <Route path="/createteam" element={<CreateTeamPage />} />
             <Route path="/addplayers" element={<AddPlayersPage />} />
+
+            <Route path="/newmatch" element={<NewMatch />} />
 
 
             <Route path="/teams" element={<TeamsPage />} />

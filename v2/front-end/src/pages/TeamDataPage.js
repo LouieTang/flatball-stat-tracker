@@ -35,6 +35,12 @@ const TeamDataPage = () => {
         navigate("/addplayers", {state: {team, user}});
     };
 
+    const startMatch = (e) => {
+        e.preventDefault();
+
+        navigate("/newmatch", {state: {team, user, playersArray}});
+    }
+
 
     const getTeam = (id) => {
         axios.get(`http://localhost:5000/teams/${id}`)
@@ -65,6 +71,7 @@ const TeamDataPage = () => {
                     <h2>Team Name: {teamData.teamName}</h2>
                     <p>Team Format: {teamData.teamFormat}</p>
                     <button onClick={onClick}>Add Player</button>
+                    <button onClick={startMatch}>Start New Match</button>
                 {playersArray ? (
                     <div>
                         {playersArray.map((player) => (
