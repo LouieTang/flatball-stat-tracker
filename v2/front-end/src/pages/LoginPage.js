@@ -59,7 +59,7 @@ const LoginPage = () => {
     return (
         <>
             <NavBar />
-            <form className="create-user-form" onSubmit={ onSubmit }>
+            <form className="login-user-form" onSubmit={ onSubmit }>
                 <div className="form-control">
                     <label htmlFor="username">Username</label>
                     <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
