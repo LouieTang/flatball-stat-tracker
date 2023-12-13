@@ -88,7 +88,7 @@ const NewMatch = () => {
     const[theirScore, setTheirScore] = useState(0);
 
     const handleAction = (selectedPlayer, action) => {
-        setActivePlayers((prevPlayers) => {
+        setPlayers((prevPlayers) => {
             const newPlayers = prevPlayers.map((player) =>
                 player.number === selectedPlayer.number ? updatePlayer(player, action) : player
             );
@@ -128,7 +128,6 @@ const NewMatch = () => {
             default:
                 break;
         }
-        console.log(activePlayers);
     };
 
     const updatePlayer = (player, action) => {
@@ -169,25 +168,7 @@ const NewMatch = () => {
     }
 
     const resetLineUp = () => {
-        console.log(activePlayers);
-        setPlayers((prevPlayers) => {
-            return prevPlayers.map((player) => {
-                const activePlayer = activePlayers.find((active) => active.number === player.number);
-                if (activePlayer) {
-                    return {
-                        ...player,
-                        catches: activePlayer.catches,
-                        drops: activePlayer.drops,
-                        throwaways: activePlayer.throwaways,
-                        goals: activePlayer.goals,
-                        blocks: activePlayer.blocks,
-                        callahans: activePlayer.callahans,
-                    };
-                }
-    
-                return player;
-            });
-        });
+        setMenu(true);
         setActivePlayers([]);
     };
 
@@ -210,7 +191,7 @@ const NewMatch = () => {
     const selectPlayer = (player) => {
         setActivePlayers((prevPlayers) => {
             if (!prevPlayers.some((p) => p.number === player.number) && prevPlayers.length < 7) {
-                return [...prevPlayers, player];
+                return [...prevPlayers, player.number];
             } else {
                 return prevPlayers;
             }
@@ -218,7 +199,7 @@ const NewMatch = () => {
     }
     const unselectPlayer = (player) => {
         setActivePlayers((prevPlayers) => {
-            const playerIndex = prevPlayers.findIndex((p) => p.number === player.number);
+            const playerIndex = prevPlayers.findIndex((p) => p === player.number);
             if (playerIndex !== -1) {
                 const updatedPlayers = [...prevPlayers];
                 updatedPlayers.splice(playerIndex, 1);
@@ -237,8 +218,10 @@ const NewMatch = () => {
         <>
             {!menu && (
                 <>
-                    {activePlayers.map((player) => (
+                    {players.map((player) => (
+                        activePlayers.some((selectedPlayer) => selectedPlayer === player.number) && (
                         <Player key={player.number} player={player} onAction={handleAction} hasDisc={player.number === playerWithDisc} inPlay={isDiscInPlay} setInPlay={setIsDiscInPlay} isOffense={isOffense}/>
+                        )
                     ))}
                     <button type="button" onClick={theirGoal}>Their Goal</button>
                 </>
@@ -246,7 +229,7 @@ const NewMatch = () => {
             {menu && (
                 <>
                     {players.map((player) => (
-                        activePlayers.some((selectedPlayer) => selectedPlayer.number === player.number) ? (
+                        activePlayers.some((selectedPlayer) => selectedPlayer === player.number) ? (
                             <button key={player.number} type="button" onClick={() => unselectPlayer(player)} style={{ background: 'lightgreen' }}>{player.number}</button>
                         ) : (
                             <button key={player.number} type="button" onClick={() => selectPlayer(player)}>{player.number}</button>
