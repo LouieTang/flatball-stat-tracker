@@ -5,6 +5,7 @@ import teamRoutes from "./routes/teams.js";
 import matchRoutes from "./routes/matches.js";
 import connectMongoDB from "./config/mongodbConfig.js";
 import userRoutes from "./routes/users.js";
+import testPlayerRoutes from "./routes/testPlayers.js"
 import cors from "cors";
 
 
@@ -20,6 +21,10 @@ app.use("/users", userRoutes);
 app.use("/players", playerRoutes);
 app.use("/teams", teamRoutes);
 app.use("/matches", matchRoutes);
+
+
+// For mock testing purposes & building
+app.use("/testplayers", testPlayerRoutes);
 
 app.get("/", (req, res) => {
     console.log("Successful");

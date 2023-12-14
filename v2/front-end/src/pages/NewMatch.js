@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 
 /**
  * Player component represents a player in the game.
@@ -23,7 +25,7 @@ const Player = ({ player, onAction, hasDisc, isOffense, inPlay, setInPlay }) => 
 
     return (
         <>
-            <button type="button" onClick={pickUpDisc}>{player.number}</button>
+            <button type="button" onClick={pickUpDisc}>{player.jerseyNumber}</button>
             {!hasDisc && isOffense && inPlay &&(
                 <>
                     <button type="button" onClick={() => onAction(player, "catch")}>Catch</button>
@@ -50,29 +52,39 @@ const Player = ({ player, onAction, hasDisc, isOffense, inPlay, setInPlay }) => 
  * @returns {JSX.Element} The rendered NewMatch component.
  */
 const NewMatch = () => {
-    const [players, setPlayers] = useState([
-        { number: 12, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 13, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 14, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 15, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 16, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 17, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 18, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 19, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 20, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 21, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 22, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 23, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 24, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 25, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 26, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 27, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 28, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 29, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 30, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 31, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-        { number: 32, catches: 0, drops: 0, throwaways: 0, goals: 0, blocks: 0, callahans: 0 },
-    ])
+
+    const [players, setPlayers] = useState([])
+    
+    const populatePlayers = () => {
+        return axios.get("http://localhost:5000/testPlayers")
+            .then(response => {
+                console.log("Success:", response.data);
+                return response.data;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                throw error;
+            });
+    }
+
+    useEffect(() => {
+        
+        async function fetchPlayers() {
+            try{
+                const playersDB = await populatePlayers();
+                setPlayers(playersDB);
+
+            } catch (error) {
+                alert("Unable to fetch from database.");
+                console.error("Error:", error);
+            }
+        };
+
+        fetchPlayers();
+    }, []);
+
+
+
 
     const [menu, setMenu] = useState(true);
 
@@ -90,7 +102,7 @@ const NewMatch = () => {
     const handleAction = (selectedPlayer, action) => {
         setPlayers((prevPlayers) => {
             const newPlayers = prevPlayers.map((player) =>
-                player.number === selectedPlayer.number ? updatePlayer(player, action) : player
+                player.jerseyNumber === selectedPlayer.jerseyNumber ? updatePlayer(player, action) : player
             );
             console.log(newPlayers);
             return newPlayers;
@@ -98,10 +110,10 @@ const NewMatch = () => {
         
         switch (action){
             case "pickup":
-                setPlayerWithDisc(selectedPlayer.number);
+                setPlayerWithDisc(selectedPlayer.jerseyNumber);
                 break;
             case "catch":
-                setPlayerWithDisc(selectedPlayer.number);
+                setPlayerWithDisc(selectedPlayer.jerseyNumber);
                 break;
             case "drop":
                 setPlayerWithDisc(-1);
@@ -175,7 +187,7 @@ const NewMatch = () => {
     const endGame = () => {
         resetLineUp();
         const playerStats = players.map((player) => ({
-            number: player.number,
+            jerseyNumber: player.jerseyNumber,
             catches: player.catches,
             drops: player.drops,
             throwaways: player.throwaways,
@@ -190,8 +202,8 @@ const NewMatch = () => {
 
     const selectPlayer = (player) => {
         setActivePlayers((prevPlayers) => {
-            if (!prevPlayers.some((p) => p.number === player.number) && prevPlayers.length < 7) {
-                return [...prevPlayers, player.number];
+            if (!prevPlayers.some((p) => p.jerseyNumber === player.jerseyNumber) && prevPlayers.length < 7) {
+                return [...prevPlayers, player.jerseyNumber];
             } else {
                 return prevPlayers;
             }
@@ -199,7 +211,7 @@ const NewMatch = () => {
     }
     const unselectPlayer = (player) => {
         setActivePlayers((prevPlayers) => {
-            const playerIndex = prevPlayers.findIndex((p) => p === player.number);
+            const playerIndex = prevPlayers.findIndex((p) => p === player.jerseyNumber);
             if (playerIndex !== -1) {
                 const updatedPlayers = [...prevPlayers];
                 updatedPlayers.splice(playerIndex, 1);
@@ -219,8 +231,8 @@ const NewMatch = () => {
             {!menu && (
                 <>
                     {players.map((player) => (
-                        activePlayers.some((selectedPlayer) => selectedPlayer === player.number) && (
-                        <Player key={player.number} player={player} onAction={handleAction} hasDisc={player.number === playerWithDisc} inPlay={isDiscInPlay} setInPlay={setIsDiscInPlay} isOffense={isOffense}/>
+                        activePlayers.some((selectedPlayer) => selectedPlayer === player.jerseyNumber) && (
+                        <Player key={player.jerseyNumber} player={player} onAction={handleAction} hasDisc={player.jerseyNumber === playerWithDisc} inPlay={isDiscInPlay} setInPlay={setIsDiscInPlay} isOffense={isOffense}/>
                         )
                     ))}
                     <button type="button" onClick={theirGoal}>Their Goal</button>
@@ -229,10 +241,10 @@ const NewMatch = () => {
             {menu && (
                 <>
                     {players.map((player) => (
-                        activePlayers.some((selectedPlayer) => selectedPlayer === player.number) ? (
-                            <button key={player.number} type="button" onClick={() => unselectPlayer(player)} style={{ background: 'lightgreen' }}>{player.number}</button>
+                        activePlayers.some((selectedPlayer) => selectedPlayer === player.jerseyNumber) ? (
+                            <button key={player.jerseyNumber} type="button" onClick={() => unselectPlayer(player)} style={{ background: 'lightgreen' }}>{player.jerseyNumber}</button>
                         ) : (
-                            <button key={player.number} type="button" onClick={() => selectPlayer(player)}>{player.number}</button>
+                            <button key={player.jerseyNumber} type="button" onClick={() => selectPlayer(player)}>{player.jerseyNumber}</button>
                         )
                     ))}
                     <br />
