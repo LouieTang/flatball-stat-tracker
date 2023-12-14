@@ -1,8 +1,10 @@
 import express from "express";
-import { getTestPlayers } from "../controllers/testPlayersController.js";
+import { getTestPlayers, updateTestPlayers } from "../controllers/testPlayersController.js";
 
 const router = express.Router();
 
 router.get("/", getTestPlayers);
+
+router.put("/", updateTestPlayers)
 
 export default router;
