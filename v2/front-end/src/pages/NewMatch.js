@@ -70,7 +70,7 @@ const NewMatch = () => {
 
     const[setup, setSetup] = useState(true);
     const [theirTeamName, setTheirTeamName] = useState("");
-    const [gameScoreCap, setGameScoreCap] = useState(undefined);
+    const [gameScoreCap, setGameScoreCap] = useState(13);
 
 
 
@@ -209,8 +209,13 @@ const NewMatch = () => {
     }
 
     const startGame = () => {
-        setSetup(false);
-        setMenu(true);
+        if(theirTeamName !== "" && gameScoreCap > 0){
+            setSetup(false);
+            setMenu(true);
+        }
+        else {
+            alert("Please Enter the Input Fields.");
+        }
     }
 
 
@@ -218,15 +223,16 @@ const NewMatch = () => {
         <>
             {setup && (
                 <>
+                    <h3>New Match</h3>
                     <p>Opponent Team Name:</p>
-                    <input type="text" id="theirName" placeholder="Their Team Name" value={theirTeamName} onChange={(e) => setTheirTeamName(e.target.value)} required />
+                    <input type="text" id="theirName" placeholder="Team Name" value={theirTeamName} onChange={(e) => setTheirTeamName(e.target.value)} required />
                     <p>We Start On:</p>
 
-                    <input type="radio" id="offenseStart" name="startOD" value="offenseStart" checked={isOffense === true} onChange={() => setIsOffense(true)} />
-                    <label className="radio-button-label" htmlFor="offenseStart">Offense</label>
+                    <input className="input_toggle" type="radio" id="offenseStart" name="startOD" value="offenseStart" checked={isOffense === true} onChange={() => setIsOffense(true)} />
+                    <label className="input_toggle" htmlFor="offenseStart">Offense</label>
 
                     <input type="radio" id="defenseStart" name="startOD" value="defenseStart" checked={isOffense === false} onChange={() => setIsOffense(false)} />
-                    <label className="radio-button-label" htmlFor="defenseStart">Defense</label>
+                    <label className="input_toggle" htmlFor="defenseStart">Defense</label>
 
                     <br />
 
@@ -234,7 +240,7 @@ const NewMatch = () => {
                     <input type="number" id="gameTo" placeholder="Score Cap" min="1" value={gameScoreCap} onChange={(e) => setGameScoreCap(e.target.value)} required/>
                     <br />
 
-                    <button onClick={startGame}>Start Game</button>
+                    <button className="btn_menu" onClick={startGame}>Start Game</button>
                 </>
             )}
 

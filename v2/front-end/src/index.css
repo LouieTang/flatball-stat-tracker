@@ -1,0 +1,109 @@
+
+/* || RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+button {
+    font: inherit;
+    text-decoration: none;
+    border: none;
+}
+
+input {
+    font: inherit;
+    text-decoration: none;
+    border: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
+/* || VARIABLES */
+
+:root {
+    /* COLOURS */
+    --primary-color: #6ab0ff;      /* Light Blue */
+    --secondary-color: #4b6584;    /* Faded Blue */
+    --background-color: #f8f9fa;   /* Clouds */
+    --text-color: #2c3e50;         /* Midnight Blue */
+    --accent-color: #8e44ad;       /* Purple */
+    --neutral-color: #95a5a6;       /* Concrete */
+}
+
+/* UTILITY CLASSES */
+
+.underline {
+    text-decoration: underline;
+}
+
+.offscreen {
+    position: absolute;
+    left: -10000px;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.accent{
+    color: var(--accent-color);
+}
+
+.no-decoration {
+    text-decoration: none;
+}
+
+.center-text {
+    text-align: center;
+}
+
+/* GENERAL STYLES */
+
+html{
+    font-family: sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+/* || BLOCKS/COMPONENTS */
+
+.btn_menu {
+    border: 1px solid var(--accent-color);
+    border-radius: 2rem;
+}
+
+.input_toggle {
+    border: 1px solid var(--accent-color);
+    border-radius: 2rem;
+}
+
+
+/* || MODIFIERS */
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked + label {
+    background-color: var(--neutral-color);
+}
