@@ -18,7 +18,7 @@ button {
 input {
     font: inherit;
     text-decoration: none;
-    border: none;
+    border: var(--neutral-color) solid 1px;
 }
 
 a {
@@ -35,12 +35,12 @@ a:hover, a:focus {
 
 :root {
     /* COLOURS */
-    --primary-color: #6ab0ff;      /* Light Blue */
-    --secondary-color: #4b6584;    /* Faded Blue */
+    --primary-color: #001F3F;      /* Deep Blue */
+    --secondary-color: #39FF14;    /* Green */
     --background-color: #f8f9fa;   /* Clouds */
     --text-color: #2c3e50;         /* Midnight Blue */
-    --accent-color: #8e44ad;       /* Purple */
-    --neutral-color: #95a5a6;       /* Concrete */
+    --accent-color: #FF851B;       /* Purple */
+    --neutral-color: #6B6B6B;       /* Concrete */
 }
 
 /* UTILITY CLASSES */
@@ -87,16 +87,61 @@ body {
 
 /* || BLOCKS/COMPONENTS */
 
-.btn_menu {
-    border: 1px solid var(--accent-color);
+.btn__menu {
+    border: 1px solid var(--neutral-color);
     border-radius: 2rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
 }
 
-.input_toggle {
-    border: 1px solid var(--accent-color);
+.btn__controls {
+    border: 1px solid var(--neutral-color);
     border-radius: 2rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
 }
 
+.btn__selected {
+    border: 1px solid var(--neutral-color);
+    border-radius: 2rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    background-color: var(--accent-color);
+}
+
+.btn__match {
+    border: 1px solid var(--neutral-color);
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+.btn__action {
+    border: 1px solid var(--neutral-color);
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+.input__toggle {
+    display: inline-block;
+    border: 1px solid var(--neutral-color);
+    border-radius: 2rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+.input__text {
+    border-radius: 2rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+.header {
+    padding: 4rem 2rem;
+}
+
+.footer {
+    padding: 2rem;
+}
 
 /* || MODIFIERS */
 
@@ -105,5 +150,5 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked + label {
-    background-color: var(--neutral-color);
+    background-color: var(--accent-color);
 }

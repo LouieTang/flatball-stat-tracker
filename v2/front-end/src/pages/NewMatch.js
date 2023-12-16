@@ -70,7 +70,7 @@ const NewMatch = () => {
 
     const[setup, setSetup] = useState(true);
     const [theirTeamName, setTheirTeamName] = useState("");
-    const [gameScoreCap, setGameScoreCap] = useState(13);
+    const [gameScoreCap, setGameScoreCap] = useState("");
 
 
 
@@ -176,7 +176,7 @@ const NewMatch = () => {
         alert(ourScore + " - " + theirScore);
         updateDatabase();
         setTheirTeamName("");
-        setGameScoreCap(undefined);
+        setGameScoreCap("");
         setMenu(true);
         setSetup(true);
     };    
@@ -225,22 +225,22 @@ const NewMatch = () => {
                 <>
                     <h3>New Match</h3>
                     <p>Opponent Team Name:</p>
-                    <input type="text" id="theirName" placeholder="Team Name" value={theirTeamName} onChange={(e) => setTheirTeamName(e.target.value)} required />
+                    <input className="input__text" type="text" id="theirName" placeholder="Team Name" value={theirTeamName} onChange={(e) => setTheirTeamName(e.target.value)} required />
                     <p>We Start On:</p>
 
-                    <input className="input_toggle" type="radio" id="offenseStart" name="startOD" value="offenseStart" checked={isOffense === true} onChange={() => setIsOffense(true)} />
-                    <label className="input_toggle" htmlFor="offenseStart">Offense</label>
+                    <input className="input__toggle" type="radio" id="offenseStart" name="startOD" value="offenseStart" checked={isOffense === true} onChange={() => setIsOffense(true)} />
+                    <label className="input__toggle" htmlFor="offenseStart">Offense</label>
 
                     <input type="radio" id="defenseStart" name="startOD" value="defenseStart" checked={isOffense === false} onChange={() => setIsOffense(false)} />
-                    <label className="input_toggle" htmlFor="defenseStart">Defense</label>
+                    <label className="input__toggle" htmlFor="defenseStart">Defense</label>
 
                     <br />
 
                     <p>Game To:</p>
-                    <input type="number" id="gameTo" placeholder="Score Cap" min="1" value={gameScoreCap} onChange={(e) => setGameScoreCap(e.target.value)} required/>
+                    <input className="input__text" type="number" id="gameTo" placeholder="Score Cap" min="1" value={gameScoreCap} onChange={(e) => setGameScoreCap(e.target.value)} required/>
                     <br />
 
-                    <button className="btn_menu" onClick={startGame}>Start Game</button>
+                    <button className="btn__menu" onClick={startGame}>Start Game</button>
                 </>
             )}
 
@@ -251,24 +251,24 @@ const NewMatch = () => {
                         <Player key={player.jerseyNumber} player={player} onAction={handleAction} hasDisc={player.jerseyNumber === playerWithDisc} inPlay={isDiscInPlay} setInPlay={setIsDiscInPlay} isOffense={isOffense}/>
                         )
                     ))}
-                    <button type="button" onClick={theirGoal}>Their Goal</button>
+                    <button className="btn__controls" type="button" onClick={theirGoal}>Their Goal</button>
                 </>
             )}
             {menu && !setup && (
                 <>
                     {players.map((player) => (
                         activePlayers.some((selectedPlayer) => selectedPlayer === player.jerseyNumber) ? (
-                            <button key={player.jerseyNumber} type="button" onClick={() => unselectPlayer(player)} style={{ background: 'lightgreen' }}>{player.jerseyNumber}</button>
+                            <button className="btn__selected" key={player.jerseyNumber} type="button" onClick={() => unselectPlayer(player)}>{player.jerseyNumber}</button>
                         ) : (
-                            <button key={player.jerseyNumber} type="button" onClick={() => selectPlayer(player)}>{player.jerseyNumber}</button>
+                            <button className="btn__controls" key={player.jerseyNumber} type="button" onClick={() => selectPlayer(player)}>{player.jerseyNumber}</button>
                         )
                     ))}
                     <br />
-                    <button type="button" onClick={startPoint}>Confirm</button>
+                    <button className="btn__controls" type="button" onClick={startPoint}>Confirm</button>
                 </>
             )}
             {!setup && (
-                <button type="button" onClick={endGame}>End Game</button>
+                <button className="btn__controls" type="button" onClick={endGame}>End Game</button>
             )}
 
         </>

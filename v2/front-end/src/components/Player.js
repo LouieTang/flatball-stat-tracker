@@ -21,19 +21,19 @@ const Player = ({ player, onAction, hasDisc, isOffense, inPlay, setInPlay }) => 
 
     return (
         <>
-            <button type="button" onClick={pickUpDisc}>{player.jerseyNumber}</button>
+            <button className="btn__match" type="button" onClick={pickUpDisc} style={hasDisc ? { background: "orange"}: {}}>{player.jerseyNumber}</button>
             {!hasDisc && isOffense && inPlay &&(
                 <>
-                    <button type="button" onClick={() => onAction(player, "catch")}>Catch</button>
-                    <button type="button" onClick={() => onAction(player, "drop")}>Drop</button>
-                    <button type="button" onClick={() => onAction(player, "throwaway")}>Throwaway</button>
-                    <button type="button" onClick={() => onAction(player, "goal")}>Goal</button>
+                    <button className="btn__action" type="button" onClick={() => onAction(player, "catch")}>Catch</button>
+                    <button className="btn__action" type="button" onClick={() => onAction(player, "drop")}>Drop</button>
+                    <button className="btn__action" type="button" onClick={() => onAction(player, "throwaway")}>Throwaway</button>
+                    <button className="btn__action" type="button" onClick={() => onAction(player, "goal")}>Goal</button>
                 </>
             )}
             {!hasDisc && !isOffense &&(
                 <>
-                    <button type="button" onClick={() => onAction(player, "block")}>Block</button>
-                    <button type="button" onClick={() => onAction(player, "callahan")}>Goal</button>
+                    <button className="btn__action" type="button" onClick={() => onAction(player, "block")}>Block</button>
+                    <button className="btn__action" type="button" onClick={() => onAction(player, "callahan")}>Goal</button>
                 </>
             )}
             <br />
