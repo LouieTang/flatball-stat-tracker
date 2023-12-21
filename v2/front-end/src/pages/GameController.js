@@ -167,14 +167,29 @@ const GameController = () => {
     }
 
     const theirGoal = () => {
+
         setTheirScore((prevScore) => prevScore + 1);
         setOffense();
+
     }
 
     const ourGoal = () => {
+
         setOurScore((prevScore) => prevScore + 1);
         setDefense();
+
     }
+
+    useEffect(() => {
+        if(ourScore !== 0 || theirScore !== 0){
+            if(ourScore >= gameScoreCap || theirScore >= gameScoreCap){
+                endGame();
+            }
+            else if((ourScore === gameScoreCap/2 + gameScoreCap%2 && theirScore <= gameScoreCap/2 + gameScoreCap%2) ||(theirScore === gameScoreCap/2 + gameScoreCap%2 && ourScore <= gameScoreCap/2 + gameScoreCap%2)){
+                alert("Halftime");
+            }
+        }
+    }, [ourScore, theirScore]);
 
     const resetLineUp = () => {
         setMenu(true);
@@ -201,6 +216,8 @@ const GameController = () => {
         setGameScoreCap("");
         setMenu(true);
         setSetup(true);
+        setOurScore(0);
+        setTheirScore(0);
     };
 
     const combinePlayersStats = (playerListDB, playerList) => {
