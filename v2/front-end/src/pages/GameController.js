@@ -3,14 +3,19 @@ import { populatePlayers, updatePlayers } from "../services/databaseManager.js";
 import Player from "../components/Player.js"
 
 /**
- * NewMatch component represents a new match created by a user. Responsible for game logic and tracking.
+ * GameController component represents a new match created by a user. Responsible for game logic and tracking.
  *
  * @component
- * @returns {JSX.Element} The rendered NewMatch component.
+ * @returns {JSX.Element} The rendered GameController component.
  */
-const NewMatch = () => {
+const GameController = () => {
 
+
+    const [history, setHistory] = useState([]);
     const [players, setPlayers] = useState([]);
+    const [gamePlayersStats, setGamePlayersStats] = useState([]);
+
+    const [playerWithDisc, setPlayerWithDisc] = useState(-1);
 
     useEffect(() => {
         
@@ -18,6 +23,7 @@ const NewMatch = () => {
             try{
                 const playersDB = await populatePlayers();
                 setPlayers(playersDB);
+                clearPlayerStats(playersDB);
 
             } catch (error) {
                 alert("Unable to fetch from database.");
@@ -26,14 +32,112 @@ const NewMatch = () => {
         };
 
         fetchPlayers();
+
     }, []);
+
+    const clearPlayerStats = (playersDB) => {
+
+        const clearedPlayers = playersDB.map((player) => ({
+          jerseyNumber: player.jerseyNumber,
+          catches: 0,
+          drops: 0,
+          throwaways: 0,
+          goals: 0,
+          assists: 0,
+          blocks: 0,
+          callahans: 0,
+        }));
+
+        console.log("Before clearing player stats:", playersDB);
+        console.log("After clearing player stats:", clearedPlayers);
+      
+        setGamePlayersStats(clearedPlayers);
+    };
+
+    const handleAction = (selectedPlayer, action) => {
+    
+        if(action === "pickup"){
+            setPlayerWithDisc(selectedPlayer.jerseyNumber);
+        }
+        else if(action !== "throwaway" && action !== "goal"){
+            setGamePlayersStats((prevPlayers) => {
+                return prevPlayers.map((player) => {
+                    if (player.jerseyNumber === selectedPlayer.jerseyNumber) {
+                        return updatePlayer(player, action);
+                    }
+                    return player;
+                });
+            });
+            setHistory([...history, {player: selectedPlayer.jerseyNumber, action: action}]);
+        }
+        else if (action === "throwaway" || action === "goal"){
+            if(action === "throwaway"){
+                setGamePlayersStats((prevPlayers) => {
+                    return prevPlayers.map((player) => {
+                        if (player.jerseyNumber === playerWithDisc) {
+                            return updatePlayer(player, action);
+                        }
+                        return player;
+                    });
+                });
+                setHistory([...history, {player: playerWithDisc, action: action}]);
+            }
+            else{
+                setGamePlayersStats((prevPlayers) => {
+                    return prevPlayers.map((player) => {
+                        if (player.jerseyNumber === playerWithDisc) {
+                            return updatePlayer(player, "assist");
+                        }
+                        else if(player.jerseyNumber === selectedPlayer.jerseyNumber){
+                            return updatePlayer(player, action);
+                        }
+                        return player;
+                    });
+                });
+                setHistory([...history, {player: selectedPlayer.jerseyNumber, action: action}]);
+            }
+        }
+        
+    }
+
+    const updatePlayer = (player, action) => {
+        console.log("Updating player:", player, "with action:", action);
+        switch (action) {
+            case "catch":
+                setPlayerWithDisc(player.jerseyNumber);
+                return { ...player, catches: player.catches + 1 };
+            case "drop":
+                setPlayerWithDisc(-1);
+                setIsOffense(false);
+                setIsDiscInPlay(false);
+                return { ...player, drops: player.drops + 1};
+            case "throwaway":
+                setPlayerWithDisc(-1);
+                setIsOffense(false);
+                setIsDiscInPlay(false);
+                return { ...player, throwaways: player.throwaways + 1};
+            case "goal":
+                setIsDiscInPlay(false);
+                ourGoal();
+                return { ...player, catches: player.catches + 1, goals: player.goals + 1};
+            case "assist":
+                return { ...player, assists: player.assists + 1};
+            case "block":
+                setPlayerWithDisc(-1);
+                setIsOffense(true);
+                return { ...player, blocks: player.blocks + 1};
+            case "callahan":
+                setIsDiscInPlay(false);
+                ourGoal();
+                return { ...player, goals: player.goals + 1, callahans: player.callahans + 1};
+            default:
+                return player;
+        }
+    };
 
     const [menu, setMenu] = useState(true);
 
     const [activePlayers, setActivePlayers] = useState([]);
-
-    const [playerWithDisc, setPlayerWithDisc] = useState(-1);
-    const [prevPlayerWithDisc, setPrevPlayerWithDisc] = useState(-1);
 
     const [isOffense, setIsOffense] = useState(true);
 
@@ -46,79 +150,7 @@ const NewMatch = () => {
     const [theirTeamName, setTheirTeamName] = useState("");
     const [gameScoreCap, setGameScoreCap] = useState("");
 
-    const handleAction = (selectedPlayer, action) => {
-        setPlayers((prevPlayers) => {
-            return prevPlayers.map((player) => {
-                if (player.jerseyNumber === selectedPlayer.jerseyNumber) {
-                    return updatePlayer(player, action);
-                }
-                return player;
-            });
-        });
-        
-        switch (action){
-            case "pickup":
-                setPlayerWithDisc(selectedPlayer.jerseyNumber);
-                break;
-            case "catch":
-                setPrevPlayerWithDisc(playerWithDisc);
-                console.log("prev: " + prevPlayerWithDisc);
-                setPlayerWithDisc(selectedPlayer.jerseyNumber);
-                console.log("selected: " + selectedPlayer.jerseyNumber);
-                console.log("current: " + playerWithDisc);
-                break;
-            case "drop":
-                setPrevPlayerWithDisc(-1);
-                setPlayerWithDisc(-1);
-                setIsOffense(false);
-                setIsDiscInPlay(false);
-                break;
-            case "throwaway":
-                setPrevPlayerWithDisc(-1);
-                setPlayerWithDisc(-1);
-                setIsOffense(false);
-                setIsDiscInPlay(false);
-                break;
-            case "goal":
-                setPrevPlayerWithDisc(playerWithDisc);
-                setIsDiscInPlay(false);
-                ourGoal();
-                break;
-            case "block":
-                setPlayerWithDisc(-1);
-                setIsOffense(true);
-                break;
-            case "callahan":
-                setIsDiscInPlay(false);
-                ourGoal();
-                break;
-            default:
-                break;
-        }
-    };
-
-    const updatePlayer = (player, action) => {
-        console.log("Updating player:", player, "with action:", action);
-        switch (action) {
-            case "catch":
-                return { ...player, catches: player.catches + 1 };
-            case "drop":
-                return { ...player, drops: player.drops + 1};
-            case "throwaway":
-                return { ...player, throwaways: player.throwaways + 1};
-            case "goal":
-                return { ...player, goals: player.goals + 1};
-            case "block":
-                return { ...player, blocks: player.blocks + 1};
-            case "callahan":
-                return { ...player, callahans: player.callahans + 1};
-            default:
-                return player;
-        }
-    };
-
     const setDefense = () => {
-        setPrevPlayerWithDisc(-1);
         setPlayerWithDisc(-1);
         setIsDiscInPlay(false);
         setIsOffense(false);
@@ -127,7 +159,6 @@ const NewMatch = () => {
     }
 
     const setOffense = () => {
-        setPrevPlayerWithDisc(-1);
         setPlayerWithDisc(-1);
         setIsDiscInPlay(false);
         setIsOffense(true);
@@ -152,24 +183,50 @@ const NewMatch = () => {
 
     const endGame = () => {
         resetLineUp();
-        const playerStats = players.map((player) => ({
+        const playerStats = gamePlayersStats.map((player) => ({
             jerseyNumber: player.jerseyNumber,
             catches: player.catches,
             drops: player.drops,
             throwaways: player.throwaways,
             goals: player.goals,
+            assists: player.assists,
             blocks: player.blocks,
             callahans: player.callahans,
         }));
     
         alert(JSON.stringify(playerStats, null, 2));
         alert(ourScore + " - " + theirScore);
-        updatePlayers(players);
+        combinePlayersStats(players, gamePlayersStats);
         setTheirTeamName("");
         setGameScoreCap("");
         setMenu(true);
         setSetup(true);
-    };    
+    };
+
+    const combinePlayersStats = (playerListDB, playerList) => {
+        
+        const combinedPlayersStats = playerListDB.map((player) => {
+            const stats = playerList.find((stats) => stats.jerseyNumber === player.jerseyNumber);
+            if (stats) {
+                return {
+                    ...player,
+                    ...stats,
+                    catches: player.catches + stats.catches,
+                    drops: player.drops + stats.drops,
+                    throwaways: player.throwaways + stats.throwaways,
+                    goals: player.goals + stats.goals,
+                    assists: player.assists + stats.assists,
+                    blocks: player.blocks + stats.blocks,
+                    callahans: player.callahans + stats.callahans,
+                };
+            } else {
+                return player;
+            }
+        }); 
+
+        updatePlayers(combinedPlayersStats);
+
+    };
 
     const selectPlayer = (player) => {
         setActivePlayers((prevPlayers) => {
@@ -179,7 +236,8 @@ const NewMatch = () => {
                 return prevPlayers;
             }
         });
-    }
+    };
+
     const unselectPlayer = (player) => {
         setActivePlayers((prevPlayers) => {
             const playerIndex = prevPlayers.findIndex((p) => p === player.jerseyNumber);
@@ -190,13 +248,13 @@ const NewMatch = () => {
             }
             return prevPlayers;
         });
-    }
+    };
 
     const startPoint = () => {
         if(activePlayers.length === 7){
             setMenu(false);
         }
-    }
+    };
 
     const startGame = () => {
         if(theirTeamName !== "" && gameScoreCap > 0){
@@ -206,7 +264,7 @@ const NewMatch = () => {
         else {
             alert("Please Enter the Input Fields.");
         }
-    }
+    };
 
     return (
         <>
@@ -259,9 +317,9 @@ const NewMatch = () => {
             {!setup && (
                 <button className="btn__controls" type="button" onClick={endGame}>End Game</button>
             )}
-
         </>
     );
+
 };
 
-export default NewMatch;
+export default GameController;

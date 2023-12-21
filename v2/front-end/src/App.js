@@ -11,6 +11,7 @@ import TeamPage from "./pages/TeamPage";
 import CreateTeamPage from "./pages/CreateTeamPage";
 import AddPlayersPage from "./pages/AddPlayersPage";
 import NewMatch from "./pages/NewMatch";
+import GameController from "./pages/GameController";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Header />
         <Routes>
             {/* <Route path="/" element={<HomePage />} /> */}
-            <Route path="/" element={<NewMatch />} />
+            <Route path="/" element={<GameController />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />

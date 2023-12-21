@@ -7,6 +7,7 @@ const testPlayerSchema = new mongoose.Schema({
     drops: Number,
     throwaways: Number,
     goals: Number,
+    assists: Number,
     blocks: Number,
     callahans: Number
 });
