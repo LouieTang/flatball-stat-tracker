@@ -32,4 +32,4 @@ export const updateTestPlayers = async (req, res) => {
         console.error(error);
         res.status(500).send("Error updating players to database");
     }
-}
+};

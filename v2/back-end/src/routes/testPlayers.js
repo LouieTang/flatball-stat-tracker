@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get("/", getTestPlayers);
 
-router.put("/", updateTestPlayers)
+router.put("/", updateTestPlayers);
 
 export default router;

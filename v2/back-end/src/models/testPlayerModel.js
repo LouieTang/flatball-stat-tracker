@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const testPlayerSchema = new mongoose.Schema({
+    _id: Schema.Types.ObjectId,
     jerseyNumber: String,
     catches: Number,
     drops: Number,
