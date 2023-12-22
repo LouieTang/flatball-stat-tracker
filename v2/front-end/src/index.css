@@ -87,6 +87,19 @@ body {
 
 /* || BLOCKS/COMPONENTS */
 
+.div__display{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2rem;
+    /* max-width: 100%; */
+}
+
+.btn__right {
+    width: 100%;
+    text-align: right;
+    padding-right: 2rem;
+}
+
 .btn__menu {
     border: 1px solid var(--neutral-color);
     border-radius: 2rem;
@@ -136,7 +149,7 @@ body {
 }
 
 .header {
-    padding: 4rem 2rem;
+    padding: 4rem 2rem 2rem;
 }
 
 .footer {
