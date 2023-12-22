@@ -35,3 +35,15 @@ export const fetchTeam = () => {
             throw error;
         });
 };
+
+export const updateTeam = (updatedTeam) => {
+    return axios.put("http://localhost:5000/testteam", {updatedTeam})
+        .then(response => {
+            console.log("Success:", response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            throw error;
+        });
+};

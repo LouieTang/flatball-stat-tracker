@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { populatePlayers, updatePlayers } from "../services/databaseManager.js";
-import Player from "../components/Player.js"
+import Player from "./Player.js"
 
 /**
  * GameController component represents a new match created by a user. Responsible for game logic and tracking.
@@ -8,7 +7,7 @@ import Player from "../components/Player.js"
  * @component
  * @returns {JSX.Element} The rendered GameController component.
  */
-const GameController = () => {
+const GameController = ({teamPlayers, updatePlayers, changeState}) => {
 
 
     const [history, setHistory] = useState([]);
@@ -18,34 +17,24 @@ const GameController = () => {
     const [playerWithDisc, setPlayerWithDisc] = useState(-1);
 
     useEffect(() => {
-        
-        async function fetchPlayers() {
-            try{
-                const playersDB = await populatePlayers();
-                setPlayers(playersDB);
-                clearPlayerStats(playersDB);
 
-            } catch (error) {
-                alert("Unable to fetch from database.");
-                console.error("Error:", error);
-            }
-        };
-
-        fetchPlayers();
+        setPlayers(teamPlayers);
+        clearPlayerStats(teamPlayers);
 
     }, []);
 
     const clearPlayerStats = (playersDB) => {
 
         const clearedPlayers = playersDB.map((player) => ({
-          jerseyNumber: player.jerseyNumber,
-          catches: 0,
-          drops: 0,
-          throwaways: 0,
-          goals: 0,
-          assists: 0,
-          blocks: 0,
-          callahans: 0,
+            _id: player._id,
+            jerseyNumber: player.jerseyNumber,
+            catches: 0,
+            drops: 0,
+            throwaways: 0,
+            goals: 0,
+            assists: 0,
+            blocks: 0,
+            callahans: 0,
         }));
 
         console.log("Before clearing player stats:", playersDB);
@@ -199,6 +188,7 @@ const GameController = () => {
     const endGame = () => {
         resetLineUp();
         const playerStats = gamePlayersStats.map((player) => ({
+            _id: player._id,
             jerseyNumber: player.jerseyNumber,
             catches: player.catches,
             drops: player.drops,
@@ -218,6 +208,7 @@ const GameController = () => {
         setSetup(true);
         setOurScore(0);
         setTheirScore(0);
+        changeState("home");
     };
 
     const combinePlayersStats = (playerListDB, playerList) => {
