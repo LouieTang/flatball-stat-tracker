@@ -40,7 +40,7 @@ const TeamHomePage = () => {
         console.log(teamId);
         console.log(teamName);
         console.log(combinedPlayersStats);
-        updateTeam({_id: teamId, teamName: teamName, players: combinedPlayersStats})
+        updateTeam({_id: teamId, teamName: teamName, teamPlayers: combinedPlayersStats})
     }
 
     return (
