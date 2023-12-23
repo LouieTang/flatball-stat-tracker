@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { fetchTeam, updateTeam } from "../services/databaseManager.js";
 import GameController from "../components/GameController.js";
 import TeamLandingDisplay from "../components/TeamLandingDisplay.js";
+import EditPlayersDisplay from "../components/EditPlayersDisplay.js";
+import UnavailableDisplay from "../components/UnavailableDisplay.js";
 
 const TeamHomePage = () => {
 
@@ -9,7 +11,7 @@ const TeamHomePage = () => {
     const [teamName, setTeamName] = useState("");
     const [players, setPlayers] = useState([]);
 
-    const [currentDisplay, setCurrentDisplay] = useState("home");
+    const [currentDisplay, setCurrentDisplay] = useState("");
 
     useEffect(() => {
         
@@ -27,11 +29,11 @@ const TeamHomePage = () => {
                 alert("Unable to fetch from database.");
                 console.error("Error:", error);
             }
+            setCurrentDisplay("home");
         };
 
         getTeam();
 
-        setCurrentDisplay("home");
 
     }, []);
 
@@ -45,8 +47,10 @@ const TeamHomePage = () => {
 
     return (
         <>
-            {currentDisplay === "home" && <TeamLandingDisplay teamName={teamName} players={players} changeState={setCurrentDisplay} />}
+            {currentDisplay === "home" && <TeamLandingDisplay teamName={teamName} teamPlayers={players} changeState={setCurrentDisplay} />}
             {currentDisplay === "match" && <GameController teamPlayers={players} updatePlayers={updatePlayers} changeState={setCurrentDisplay} />}
+            {currentDisplay === "edit" && <EditPlayersDisplay teamPlayers={players} />}
+            {currentDisplay === "" && <UnavailableDisplay />}
         </>
     )
 
