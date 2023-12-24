@@ -8,7 +8,9 @@ const EditPlayersDisplay = ({teamPlayers}) => {
                 {teamPlayers.map((player) => {
                     return <PlayerDisplay key={player.jerseyNumber} player={player} edit={true} />
                 })}
-                
+                <br />
+                <button>Save Players</button>
+
             </div>
         </>
     )
