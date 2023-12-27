@@ -1,7 +1,12 @@
 import React from "react"
 import PlayerDisplay from "./PlayerDisplay.js"
 
-const EditPlayersDisplay = ({teamPlayers}) => {
+const EditPlayersDisplay = ({teamPlayers, updatePlayers}) => {
+
+    const savePlayers = () => {
+        updatePlayers(teamPlayers);
+    }
+
     return (
         <>
             <div>
@@ -9,7 +14,7 @@ const EditPlayersDisplay = ({teamPlayers}) => {
                     return <PlayerDisplay key={player.jerseyNumber} player={player} edit={true} />
                 })}
                 <br />
-                <button>Save Players</button>
+                <button onClick={savePlayers}>Save Players</button>
 
             </div>
         </>

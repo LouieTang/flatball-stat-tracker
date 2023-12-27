@@ -42,14 +42,14 @@ const TeamHomePage = () => {
         console.log(teamId);
         console.log(teamName);
         console.log(combinedPlayersStats);
-        updateTeam({_id: teamId, teamName: teamName, teamPlayers: combinedPlayersStats})
+        updateTeam({_id: teamId, teamName: teamName, teamPlayers: combinedPlayersStats});
     }
 
     return (
         <>
             {currentDisplay === "home" && <TeamLandingDisplay teamName={teamName} teamPlayers={players} changeState={setCurrentDisplay} />}
             {currentDisplay === "match" && <GameController teamPlayers={players} updatePlayers={updatePlayers} changeState={setCurrentDisplay} />}
-            {currentDisplay === "edit" && <EditPlayersDisplay teamPlayers={players} />}
+            {currentDisplay === "edit" && <EditPlayersDisplay teamPlayers={players} updatePlayers={updatePlayers} />}
             {currentDisplay === "" && <UnavailableDisplay />}
         </>
     )
