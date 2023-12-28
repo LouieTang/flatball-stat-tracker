@@ -7,8 +7,7 @@ const EditPlayersDisplay = ({teamPlayers, updatePlayers, changeState}) => {
     const [newPlayer, setNewPlayer] = useState("");
 
     const savePlayers = () => {
-        updatePlayers(teamPlayers);
-        // console.log(players);
+        updatePlayers(players);
         changeState("home");
     };
 
