@@ -15,7 +15,6 @@ export const updateTestTeam = async (req, res) => {
         const { updatedTeam } = req.body;
         console.log(updatedTeam);
         try{
-            // const updatePromise = await TestTeam.find({_id: updatedTeam._id});
             const updatePromise = await TestTeam.updateMany({_id: updatedTeam._id}, {$set: {teamPlayers: updatedTeam.teamPlayers}});
             console.log(updatePromise);
         }catch (error) {

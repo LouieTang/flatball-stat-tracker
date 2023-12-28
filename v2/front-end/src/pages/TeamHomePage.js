@@ -49,7 +49,7 @@ const TeamHomePage = () => {
         <>
             {currentDisplay === "home" && <TeamLandingDisplay teamName={teamName} teamPlayers={players} changeState={setCurrentDisplay} />}
             {currentDisplay === "match" && <GameController teamPlayers={players} updatePlayers={updatePlayers} changeState={setCurrentDisplay} />}
-            {currentDisplay === "edit" && <EditPlayersDisplay teamPlayers={players} updatePlayers={updatePlayers} />}
+            {currentDisplay === "edit" && <EditPlayersDisplay teamPlayers={players} updatePlayers={updatePlayers} changeState={setCurrentDisplay} />}
             {currentDisplay === "" && <UnavailableDisplay />}
         </>
     )

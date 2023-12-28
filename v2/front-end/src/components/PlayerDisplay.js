@@ -1,6 +1,6 @@
 import React from "react";
 
-const PlayerDisplay = ({player, edit}) => {
+const PlayerDisplay = ({player}) => {
     return (
         <div>
             <h3>{player.jerseyNumber}</h3>
@@ -11,7 +11,6 @@ const PlayerDisplay = ({player, edit}) => {
             <p>assists: {player.assists}</p>
             <p>blocks: {player.blocks}</p>
             <p>callahans: {player.callahans}</p>
-            {edit && <button>Remove Player</button>}
         </div>
     );
 }

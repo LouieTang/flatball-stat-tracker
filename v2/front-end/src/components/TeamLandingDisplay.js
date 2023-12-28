@@ -11,7 +11,7 @@ const TeamLandingDisplay = ({teamName, teamPlayers, changeState}) => {
             <h3>Player Stats</h3>
             <div className="div__display">
                 {teamPlayers.map((player) => {
-                    return <PlayerDisplay key={player.jerseyNumber} player={player} edit={false} />
+                    return <PlayerDisplay key={player.jerseyNumber} player={player} />
                 })}
             </div>
         </>
