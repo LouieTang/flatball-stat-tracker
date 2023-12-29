@@ -20,3 +20,5 @@ Folder Structure for API's - Beginner, Intermediate, and Advanced - https://www.
 React JS Crash Course - https://www.youtube.com/watch?v=w7ejDZ8SWv8
 
 Learn React Router v6 In 45 Minutes - https://www.youtube.com/watch?v=Ul3y1LXxzdU
+
+Build a Fullstack Login & Register Page with MERN (react.js, mongo, express, bcrypt, jwt & more) - https://www.youtube.com/watch?v=XPC81RWOItI
