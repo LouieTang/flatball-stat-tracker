@@ -5,6 +5,7 @@ import testPlayerRoutes from "./routes/testPlayers.js";
 import testTeamRoutes from "./routes/testTeam.js";
 import testUserRoutes from "./routes/testUsers.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 
 const app = express();
@@ -15,6 +16,8 @@ connectMongoDB();
 // app.use(cors());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(express.urlencoded({extended: false}));
 
 
 // For mock testing purposes & building

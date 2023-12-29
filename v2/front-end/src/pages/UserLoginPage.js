@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import { testLogin } from "../services/userManager.js";
 
 const UserLoginPage = () => {
 
@@ -7,9 +8,11 @@ const UserLoginPage = () => {
         password: "",
     });
 
-    const checkValidity = (e) => {
-        console.log(userData);
+    const checkValidity = async (e) => {
         e.preventDefault();
+        const {email, password} = userData;
+        const result = await testLogin({email, password});
+        alert(result);
     }
 
     return (

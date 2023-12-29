@@ -13,12 +13,6 @@ const UserRegisterPage = () => {
         e.preventDefault();
         const {email, password, teamName} = userData;
         const result = await testRegistration({email, password, teamName});
-        if(result === "User Added Successfully"){
-            alert("Successfully Registered");
-        }
-        else{
-            alert(result);
-        }
     }
 
     return (

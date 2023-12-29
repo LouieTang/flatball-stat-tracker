@@ -16,14 +16,24 @@ export const testRegistration = ({email, password, teamName}) => {
             console.log("Success:", response.data);
             return response.data;
         })
-        // .then(data =>{
-        //     if(data === "Email Already Exists"){
-        //         return data;
-        //     }
-        //     else{
-        //         return "Success";
-        //     }
-        // })
+        .catch(error => {
+            console.error("Error:", error);
+            throw error;
+        });
+};
+
+export const testLogin = ({email, password}) => {
+    if(!email){
+        return "Invalid Email";
+    }
+    if(!password || password.length < 6){
+        return "Incorrect Password";
+    }
+    return axios.post("/testusers/login", {email, password})
+        .then(response => {
+            console.log("Success:", response.data);
+            return response.data;
+        })
         .catch(error => {
             console.error("Error:", error);
             throw error;
