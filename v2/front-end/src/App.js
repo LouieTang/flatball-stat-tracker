@@ -6,16 +6,14 @@ import TeamHomePage from "./pages/TeamHomePage.js";
 import UserLoginPage from "./pages/UserLoginPage.js";
 import UserRegisterPage from "./pages/UserRegisterPage.js";
 import axios from "axios";
-
+import {UserContextProvider} from "./contexts/userContext.js";
 
 axios.defaults.baseURL = "http://localhost:5000";
 axios.defaults.withCredentials = true;
 
 function App() {
   return (
-    <>
-        <div>
-        </div>
+    <UserContextProvider>
         <Header />
         <NavBar />
         <Routes>
@@ -24,7 +22,7 @@ function App() {
             <Route path="/team" element={<TeamHomePage />} />
         </Routes>
         <Footer />
-    </>
+    </UserContextProvider>
   );
 };
 

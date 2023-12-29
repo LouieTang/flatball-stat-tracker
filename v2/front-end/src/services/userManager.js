@@ -39,3 +39,15 @@ export const testLogin = ({email, password}) => {
             throw error;
         });
 };
+
+export const getUser = () => {
+    return axios.get("/testusers/user")
+    .then(response => {
+        console.log("Success:", response.data);
+        return response.data;
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        throw error;
+    });
+};

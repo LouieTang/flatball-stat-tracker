@@ -1,6 +1,7 @@
 import TestUser from "../models/testUserModel.js";
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../config/secrets.js";
 
 export const registerUser = async (req, res) => {
     try {
@@ -44,7 +45,7 @@ export const loginUser = async (req, res) => {
         const match = await comparePassword(password, user.password);
         
         if(match){
-            jwt.sign({email: user.email, id: user._id}, "asdjfkl;jlkabjs;dkjf;asdfa", {}, (err, token) => {
+            jwt.sign({email: user.email, id: user._id}, JWT_SECRET, {}, (err, token) => {
                 if(err){
                     throw err;
                 }
@@ -58,5 +59,23 @@ export const loginUser = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Error Logging in User");
+    }
+};
+
+export const getUser = (req, res) => {
+    const {token} = req.cookies;
+    if(token){
+        jwt.verify(token, JWT_SECRET, {}, (err, user) => {
+            if(err){
+                console.error(err.message);
+                res.status(401).json({ error: 'Invalid or expired token' });
+            }
+            else{
+                res.json(user);
+            }
+        })
+    }
+    else {
+        res.status(401).json({ error: 'Token not provided' });
     }
 };

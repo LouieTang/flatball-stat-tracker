@@ -13,6 +13,7 @@ const UserRegisterPage = () => {
         e.preventDefault();
         const {email, password, teamName} = userData;
         const result = await testRegistration({email, password, teamName});
+        alert(result);
     }
 
     return (
