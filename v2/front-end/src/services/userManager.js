@@ -32,7 +32,7 @@ export const testLogin = ({email, password}) => {
     return axios.post("/testusers/login", {email, password})
         .then(response => {
             console.log("Success:", response.data);
-            return response.data;
+            return "Success";
         })
         .catch(error => {
             console.error("Error:", error);

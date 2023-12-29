@@ -1,8 +1,10 @@
 import React, {useState} from "react"
 import { testLogin } from "../services/userManager.js";
+import { useNavigate } from "react-router-dom";
 
 const UserLoginPage = () => {
 
+    const navigate = useNavigate();
     const [userData, setUserData] = useState({
         email: "",
         password: "",
@@ -12,7 +14,10 @@ const UserLoginPage = () => {
         e.preventDefault();
         const {email, password} = userData;
         const result = await testLogin({email, password});
-        alert(result);
+        // alert(result);
+        if(result === "Success"){
+            navigate("/team");
+        }
     }
 
     return (

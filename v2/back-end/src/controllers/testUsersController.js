@@ -45,7 +45,7 @@ export const loginUser = async (req, res) => {
         const match = await comparePassword(password, user.password);
         
         if(match){
-            jwt.sign({email: user.email, id: user._id}, JWT_SECRET, {}, (err, token) => {
+            jwt.sign({email: user.email, id: user._id, teamName: user.teamName, teamPlayers: user.teamPlayers}, JWT_SECRET, {}, (err, token) => {
                 if(err){
                     throw err;
                 }
@@ -71,6 +71,7 @@ export const getUser = (req, res) => {
                 res.status(401).json({ error: 'Invalid or expired token' });
             }
             else{
+                console.log(user);
                 res.json(user);
             }
         })

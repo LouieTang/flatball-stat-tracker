@@ -1,8 +1,10 @@
 import React, {useState} from "react"
 import { testRegistration } from "../services/userManager.js";
+import { useNavigate } from "react-router-dom";
 
 const UserRegisterPage = () => {
 
+    const navigate = useNavigate();
     const [userData, setUserData] = useState({
         email: "",
         password: "",
@@ -13,7 +15,12 @@ const UserRegisterPage = () => {
         e.preventDefault();
         const {email, password, teamName} = userData;
         const result = await testRegistration({email, password, teamName});
-        alert(result);
+        if(result === "User Added Successfully"){
+            navigate("/login");
+        }
+        else{
+            console.log("Error");
+        }
     }
 
     return (
