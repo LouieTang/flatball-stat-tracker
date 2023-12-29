@@ -37,7 +37,7 @@ export const fetchTeam = () => {
 };
 
 export const updateTeam = (updatedTeam) => {
-    return axios.put("/testteam", {updatedTeam})
+    return axios.put("/testusers/team", {updatedTeam})
         .then(response => {
             console.log("Success:", response.data);
             return response.data;

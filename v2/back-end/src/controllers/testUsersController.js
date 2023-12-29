@@ -80,3 +80,22 @@ export const getUser = (req, res) => {
         res.status(401).json({ error: 'Token not provided' });
     }
 };
+
+export const updateTestTeam = async (req, res) => {
+    try {
+        const { updatedTeam } = req.body;
+        console.log(updatedTeam);
+        try{
+            const updatePromise = await TestUser.updateMany({_id: updatedTeam._id}, {$set: {teamPlayers: updatedTeam.teamPlayers}});
+            console.log(updatePromise);
+        }catch (error) {
+            console.error(error);
+            throw error;
+        }
+
+        res.status(200).send("Team Updated Successfully");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error updating team to database");
+    }
+};

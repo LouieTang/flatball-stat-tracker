@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { fetchTeam, updateTeam } from "../services/databaseManager.js";
+import { updateTeam } from "../services/databaseManager.js";
 import GameController from "../components/GameController.js";
 import TeamLandingDisplay from "../components/TeamLandingDisplay.js";
 import EditPlayersDisplay from "../components/EditPlayersDisplay.js";
 import UnavailableDisplay from "../components/UnavailableDisplay.js";
+import { getUser } from "../services/userManager.js";
 
 const TeamHomePage = () => {
 
@@ -17,11 +18,11 @@ const TeamHomePage = () => {
         
         async function getTeam() {
             try{
-                const team = await fetchTeam();
+                const team = await getUser();
                 console.log(team.teamName);
                 console.log(team.teamPlayers);
-                console.log(team._id);
-                setTeamId(team._id);
+                console.log(team.id);
+                setTeamId(team.id);
                 setTeamName(team.teamName);
                 setPlayers(team.teamPlayers);
 

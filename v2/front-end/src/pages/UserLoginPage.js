@@ -15,7 +15,8 @@ const UserLoginPage = () => {
         const {email, password} = userData;
         const result = await testLogin({email, password});
         // alert(result);
-        if(result === "Success"){
+        console.log(result);
+        if(result === "Proceed"){
             navigate("/team");
         }
     }
