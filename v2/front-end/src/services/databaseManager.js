@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const populatePlayers = () => {
-    return axios.get("http://localhost:5000/testplayers")
+    return axios.get("/testplayers")
         .then(response => {
             console.log("Success:", response.data);
             return response.data;
@@ -13,7 +13,7 @@ export const populatePlayers = () => {
 };
 
 export const updatePlayers = (players) => {
-    return axios.put("http://localhost:5000/testplayers", {players})
+    return axios.put("/testplayers", {players})
         .then(response => {
             console.log("Success:", response.data);
             return response.data;
@@ -25,7 +25,7 @@ export const updatePlayers = (players) => {
 };
 
 export const fetchTeam = () => {
-    return axios.get("http://localhost:5000/testteam")
+    return axios.get("/testteam")
         .then(response => {
             console.log("Success:", response.data);
             return response.data;
@@ -37,7 +37,7 @@ export const fetchTeam = () => {
 };
 
 export const updateTeam = (updatedTeam) => {
-    return axios.put("http://localhost:5000/testteam", {updatedTeam})
+    return axios.put("/testteam", {updatedTeam})
         .then(response => {
             console.log("Success:", response.data);
             return response.data;

@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const testUserSchema = new mongoose.Schema({
-    _id: Schema.Types.ObjectId,
     email: String,
     password: String,
     teamName: String,
