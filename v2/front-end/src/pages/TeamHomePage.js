@@ -5,8 +5,12 @@ import TeamLandingDisplay from "../components/TeamLandingDisplay.js";
 import EditPlayersDisplay from "../components/EditPlayersDisplay.js";
 import UnavailableDisplay from "../components/UnavailableDisplay.js";
 import { getUser } from "../services/userManager.js";
+import Logout from "../components/Logout.js";
+import { useNavigate } from "react-router-dom";
 
 const TeamHomePage = () => {
+
+    const navigate = useNavigate();
 
     const [teamId, setTeamId] = useState("");
     const [teamName, setTeamName] = useState("");
@@ -25,12 +29,11 @@ const TeamHomePage = () => {
                 setTeamId(team.id);
                 setTeamName(team.teamName);
                 setPlayers(team.teamPlayers);
-
+                setCurrentDisplay("home");
             } catch (error) {
                 alert("Unable to fetch from database.");
                 console.error("Error:", error);
             }
-            setCurrentDisplay("home");
         };
 
         getTeam();
@@ -46,8 +49,18 @@ const TeamHomePage = () => {
         updateTeam({_id: teamId, teamName: teamName, teamPlayers: combinedPlayersStats});
     }
 
+    const logout = () => {
+        document.cookie = "token=; expires=Thu, 01 Jan 2000 00:00:00 UTC; path=/;";
+        setTeamId("");
+        setTeamName("");
+        setPlayers([]);
+        setCurrentDisplay("");
+        navigate("/");
+    }
+
     return (
         <>
+            <Logout logout={logout}/>
             {currentDisplay === "home" && <TeamLandingDisplay teamName={teamName} teamPlayers={players} changeState={setCurrentDisplay} />}
             {currentDisplay === "match" && <GameController teamPlayers={players} updatePlayers={updatePlayers} changeState={setCurrentDisplay} />}
             {currentDisplay === "edit" && <EditPlayersDisplay teamPlayers={players} updatePlayers={updatePlayers} changeState={setCurrentDisplay} />}

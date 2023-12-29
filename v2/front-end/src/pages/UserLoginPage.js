@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import { testLogin } from "../services/userManager.js";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../components/NavBar.js";
 
 const UserLoginPage = () => {
 
@@ -23,6 +24,7 @@ const UserLoginPage = () => {
 
     return (
         <>
+            <NavBar />
             <form onSubmit={checkValidity}>
                 <label>Email</label>
                 <input type="email" placeholder="Email" value={userData.email} onChange={(e) => setUserData({...userData, email: e.target.value})}/>
